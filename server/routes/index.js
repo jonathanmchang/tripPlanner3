@@ -19,4 +19,13 @@ router.get("/", (req, res, next) => {
     .catch(next);
 });
 
+router.get('/api/itineraries/:itineraryId', function (req,res,next) {
+  Itinerary.findById(req.params.itineraryId, {
+    include: [{ all: true, nested: true}]
+  })
+  .then((itinerary) => {
+    res.json(itinerary)
+  })
+})
+
 module.exports = router;
