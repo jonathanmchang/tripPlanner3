@@ -13,4 +13,4 @@ Itinerary.belongsToMany(Hotel, {through: 'itinerary_hotel'});
 Itinerary.belongsToMany(Restaurant, {through: 'itinerary_restaurant'});
 Itinerary.belongsToMany(Activity, {through: 'itinerary_activity'});
 
-module.exports = {Itinerary}
+module.exports = Itinerary

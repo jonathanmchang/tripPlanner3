@@ -4,7 +4,7 @@ const Place = require('./place');
 const Hotel = require('./hotel');
 const Restaurant = require('./restaurant');
 const Activity = require('./activity');
-// const Itinerary = require('./itinerary')
+const Itinerary = require('./itinerary')
 
 Hotel.belongsTo(Place);
 Restaurant.belongsTo(Place);
@@ -16,5 +16,5 @@ module.exports = {
   Hotel,
   Restaurant,
   Activity,
-  // Itinerary
+  Itinerary
 };
