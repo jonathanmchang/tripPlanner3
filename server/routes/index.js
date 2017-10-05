@@ -23,14 +23,33 @@ router.get("/", (req, res, next) => {
 });
 
 router.get('/itineraries/:itineraryId', function (req,res,next) {
-  Itinerary.findById(req.params.itineraryId, {
-    include: [{ all: true, nested: true}]
-  })
-  .then((itinerary) => {
-    console.log('hi')
-    res.json(itinerary)
-  })
-  .catch(next)
+
+    Itinerary.findById(req.params.itineraryId, {
+  
+      include: [{ all: true, nested: true}]
+    })
+    .then((itinerary) => {
+      res.json(itinerary)
+    })
+    .catch(next)
+  // }
 })
+
+router.post('/itineraries', function(req,res,next){
+  Itinerary.create({
+    
+  })
+  .then(function(itinerary){
+
+    const a = itinerary.setHotel(req.body.hotels})
+    const b = itinerary.setRestaurant(req.body.restaurants)
+    const c = itinerary.setActivity(req.body.activities)
+
+    
+    .then()
+    res.json(itinerary);
+  })
+})
+  
 
 module.exports = router;

@@ -11,6 +11,8 @@ const state = {
   selectedAttractions: []
 };
 
+ const itineraryId = window.location.hash.slice(1);
+
 /*
   * Instantiate the Map
   */
@@ -31,7 +33,15 @@ const map = new mapboxgl.Map({
   * Populate the list of attractions
   */
 
+  ["hotels", "restaurants", "activities"].forEach(attractionType => {
+    document
+      .getElementById(`${attractionType}-add`)
+      .addEventListener("click", () => handleAddAttraction(attractionType));
+  });
+  
+
 api.fetchAttractions().then(attractions => {
+  
   state.attractions = attractions;
   const { hotels, restaurants, activities } = attractions;
   hotels.forEach(hotel => makeOption(hotel, "hotels-choices"));
@@ -45,16 +55,18 @@ const makeOption = (attraction, selector) => {
   select.add(option);
 };
 
+api.fetchItineraries(itineraryId).then(itineraryData => {
+  console.log('itinerary')
+  itineraryData.hotels.forEach(hotel => buildAttractionAssets("hotels",hotel));
+  itineraryData.restaurants.forEach(restaurant => buildAttractionAssets("restaurants", restaurant));
+  itineraryData.activities.forEach(activity => buildAttractionAssets("activities",activity));
+})
+
 /*
   * Attach Event Listeners
   */
 
 // what to do when the `+` button next to a `select` is clicked
-["hotels", "restaurants", "activities"].forEach(attractionType => {
-  document
-    .getElementById(`${attractionType}-add`)
-    .addEventListener("click", () => handleAddAttraction(attractionType));
-});
 
 // Create attraction assets (itinerary item, delete button & marker)
 const handleAddAttraction = attractionType => {
@@ -116,3 +128,5 @@ const buildAttractionAssets = (category, attraction) => {
     map.flyTo({ center: [-74.0, 40.731], zoom: 12.3 });
   });
 };
+
+console.log('location:', location)
